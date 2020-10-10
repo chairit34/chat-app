@@ -73,12 +73,19 @@ io.on('connection', (socket) => {
     }
 
     const user = getUser(socket.id);
+    if (!user) {
+      return;
+    }
     io.to(user.room).emit('message', generateMessage(user.username, message));
     callback();
   });
 
   socket.on('sendLocation', (coords, callback) => {
+    console.log('getlocation');
     const user = getUser(socket.id);
+    if (!user) {
+      return;
+    }
     io.to(user.room).emit(
       'locationMessage',
       generateLocationMessage(

@@ -95,7 +95,6 @@ $sendLocationButton.addEventListener('click', () => {
   }
   $sendLocationButton.setAttribute('disabled', 'disabled');
   navigator.geolocation.getCurrentPosition((position) => {
-    //console.log(position)
     socket.emit(
       'sendLocation',
       {
