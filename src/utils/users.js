@@ -48,9 +48,34 @@ const getUsersInRoom = (room) => {
   return users.filter((user) => user.room === room);
 };
 
+const getRooms = () => {
+  const rooms = users.map((user) => user.room);
+  return [...new Set(rooms)];
+};
+
 module.exports = {
   addUser,
   removeUser,
   getUser,
   getUsersInRoom,
+  getRooms,
 };
+
+// addUser({
+//   username: 'Jay',
+//   room: '123',
+//   id: '12',
+// });
+// addUser({
+//   username: 'Tun',
+//   room: '123',
+//   id: '13',
+// });
+// addUser({
+//   username: 'Mark',
+//   room: '123',
+//   id: '14',
+// });
+
+// console.log(users);
+// console.log(getRooms());

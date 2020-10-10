@@ -37,6 +37,13 @@ input {
   outline: none;
 }
 
+select {
+  border: 1px solid #eeeeee;
+  padding: 12px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
 button {
   cursor: pointer;
   padding: 12px;
@@ -72,6 +79,7 @@ button:disabled {
   background: #f7f7fa;
   padding: 24px;
   width: 250px;
+  margin: 0 24px;
 }
 
 .centered-form button {

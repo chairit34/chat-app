@@ -12,6 +12,7 @@ const {
   removeUser,
   getUser,
   getUsersInRoom,
+  getRooms,
 } = require('./utils/users');
 
 const app = express();
@@ -27,6 +28,9 @@ let count = 0;
 
 io.on('connection', (socket) => {
   console.log('new web socket connection');
+  socket.emit('roomsData', {
+    rooms: getRooms(),
+  });
 
   socket.on('join', ({ username, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, username, room });
@@ -37,7 +41,10 @@ io.on('connection', (socket) => {
 
     socket.join(user.room);
 
-    socket.emit('message', generateMessage('Admin', 'Welcome!'));
+    socket.emit(
+      'message',
+      generateMessage('Admin', `Welcome ${user.username}!`)
+    );
     socket.broadcast
       .to(user.room)
       .emit(
@@ -47,6 +54,9 @@ io.on('connection', (socket) => {
     io.to(user.room).emit('roomData', {
       room: user.room,
       users: getUsersInRoom(user.room),
+    });
+    io.emit('roomsData', {
+      rooms: getRooms(),
     });
 
     callback();
@@ -90,6 +100,9 @@ io.on('connection', (socket) => {
       io.to(user.room).emit('roomData', {
         room: user.room,
         users: getUsersInRoom(user.room),
+      });
+      io.emit('roomsData', {
+        rooms: getRooms(),
       });
     }
   });
